@@ -1,3 +1,188 @@
 /**************/
 /* Custom CSS */
 /**************/
+
+body {
+  background: #4ECDC4;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+
+  /*GIPHY BG PROPERTIES */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/*.randbg {*/
+/*  background: url('../img/10.gif') no-repeat center center fixed;
+  background: url('https://media2.giphy.com/media/wy63WPXSamvFC/giphy.gif') no-repeat center center fixed;*/
+/*  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }*/
+/*  .randbg.bg1 {
+  background-image: url('../img/1.gif');
+  }
+  .randbg.bg2 {
+  background-image: url('../img/2.gif');
+  }
+  .randbg.bg3 {
+  background-image: url('../img/3.gif');
+  }
+  .randbg.bg4 {
+  background-image: url('../img/4.gif');
+  }
+  .randbg.bg5 {
+  background-image: url('../img/5.gif');
+  }
+  .randbg.bg6 {
+  background-image: url('../img/6.gif');
+  }
+  .randbg.bg7 {
+  background-image: url('../img/7.gif');
+  }
+  .randbg.bg8 {
+  background-image: url('../img/8.gif');
+  }
+  .randbg.bg9 {
+  background-image: url('../img/9.gif');
+  }
+  .randbg.bg10 {
+  background-image: url('../img/10.gif');
+  }*/
+
+
+body h1 {
+    text-shadow: 2px 2px #000;
+}
+
+body h2 {
+    text-shadow: 2px 2px #000;
+}
+
+body h3 {
+    text-shadow: 2px 2px #000;
+}
+
+label {
+  color: #fff;
+
+}
+
+a {
+    text-transform: uppercase;
+    text-decoration: none;
+/*    letter-spacing: 2px;*/
+    font-size: 15px;
+    padding:12px;
+    color: #fff;
+}
+
+a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.header {
+      background-color: #4ECDC4;
+}
+
+.nav li {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  display: inline-block;
+/*  margin:0 10px 0 10px;*/
+  text-transform: uppercase;
+}
+
+.main {
+  background-color: #fff;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.giphy img {
+  height: 100%;
+  width: 100%;
+}
+
+}
+.push {
+  margin-bottom: 400px;
+}
+
+.main h1 {
+	font-family: 'Cooper Hewitt', sans-serif;
+  color: #4ECDC4;
+  text-transform: uppercase;
+}
+
+#record-display {
+  margin: 0 auto;
+  position: relative;
+  text-align: left; 
+}
+
+.twilio {
+  background-color: #0FB8E4;
+/*  color: #0F7ADA;*/
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 40px;
+  width: 100%;
+}
+
+.twilio h5 {
+  text-transform: uppercase;
+}
+
+.modal-header h4{
+  font-family: 'Cooper Hewitt', sans-serif;
+  color: #0F7ADA;
+}
+
+.modal-body {
+  background: #0F7ADA;
+}
+
+.footer {
+  background-color: #fff;
+  color: #0F7ADA;
+  padding-top: 6px;
+  position: fixed;
+  bottom:0;
+  width: 100%;
+}
+
+.footer p {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #fff;
+  font-family: 'Cooper Hewitt', sans-serif;
+}
+
+.footer a {
+  color: #4ECDC4;
+}
+
+.edit-button {
+  background-color: #fff;
+  color: #0F7ADA;
+}
+
+.refresh-button {
+  color: #0F7ADA;
+}
+
+.displayDate{
+ /*   font-size:50px;*/
+    color: #0F7ADA;
+}

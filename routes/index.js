@@ -1,9 +1,25 @@
+
+// GET routes
+// http://localhost:3000/api/get
+// http://localhost:3000/api/get/:id
+// http://localhost:3000/api/delete/:id
+// http://localhost:3000/add-til
+// http://localhost:3000/directory
+// POST routes
+// http://localhost:3000/api/create
+// http://localhost:3000/api/update/:id
+
+//https://github.com/sslover/designing-for-data-personalization/blob/master/week8/mongoose-cheatsheet.md
+// https://songhitp-today-i-learned.herokuapp.com/add-til
+// https://songhitp-today-i-learned.herokuapp.com/directory
+// https://songhitp-today-i-learned.herokuapp.com/twilio-callback
+
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var Record = require("../models/record.js"); // our db model
+// var twilio = require('twilio');
 
-// our db model
-var Animal = require("../models/model.js");
 
 /**
  * GET '/'
@@ -12,19 +28,41 @@ var Animal = require("../models/model.js");
  * @return {Object} json
  */
 router.get('/', function(req, res) {
-  
-  var jsonData = {
-  	'name': 'node-express-api-boilerplate',
-  	'api-status':'OK'
-  }
 
+  console.log('home page requested!');
+
+  var jsonData = {
+  	'name': 'today-i-learned',
+  	'api-status':'OK',
+    'instructions': 'text 917-746-4128 with your lesson of the day',
+    'format': 'Rain is wet, This morning it was gross outside, Having ice cream, tag1. tag2. tag3'
+  }
   // respond with json data
   res.json(jsonData)
+
+  // res.render('directory.html')
+
 });
 
-// simple route to show an HTML page
-router.get('/sample-page', function(req,res){
-  res.render('sample.html')
+// simple route to show an HTML page for adding data
+router.get('/home', function(req,res){
+
+  res.render('home.html')
+
+})
+
+// simple route to show an HTML page for recorded data
+router.get('/admin', function(req,res){
+
+  res.render('admin.html')
+
+})
+
+// simple route to show an HTML page for recorded data
+router.get('/archive', function(req,res){
+
+  res.render('archive.html')
+
 })
 
 // /**
@@ -33,82 +71,83 @@ router.get('/sample-page', function(req,res){
 //  * @param  {Object} req. An object containing the different attributes of the Person
 //  * @return {Object} JSON
 //  */
-
 router.post('/api/create', function(req, res){
 
-    console.log(req.body);
+  console.log(req.body);
+  
+  var recordObj = {
+    til: req.body.til,
+    context: req.body.context,
+    bestPartDay: req.body.bestPartDay,
+    tags: req.body.tags.split(',')
+    // pageURL: req.body.pageURL,
+  }
 
-    // pull out the information from the req.body
-    var name = req.body.name;
-    var age = req.body.age;
-    var tags = req.body.tags.split(","); // split string into array
-    var weight = req.body.weight;
-    var color = req.body.color;
-    var url = req.body.url;
+  var record = new Record(recordObj);
 
-    // hold all this data in an object
-    // this object should be structured the same way as your db model
-    var animalObj = {
-      name: name,
-      age: age,
-      tags: tags,
-      description: {
-        weight: weight,
-        color: color
-      },
-      url: url
-    };
+  record.save(function(err,data){
+    if(err){
+      var error = {
+        status: "ERROR",
+        message: err
+      }
+      return res.json(err)
 
-    // create a new animal model instance, passing in the object
-    var animal = new Animal(animalObj);
+    }
 
-    // now, save that animal instance to the database
-    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-    animal.save(function(err,data){
-      // if err saving, respond back with error
-      if (err){
-        var error = {status:'ERROR', message: 'Error saving animal'};
-        return res.json(error);
+    // var jsonData = {
+    //   status: "OK",
+    //   record: data
+    // }
+
+    // return res.json(jsonData);
+  
+    return res.redirect('/archive');
+  })
+})
+
+//get api
+router.get('/api/get', function(req,res){
+
+  Record.find(function(err,data){
+
+      if(err){
+        var error = {
+          status: "ERROR",
+          message: err
+        }
+        return res.json(err)
       }
 
-      console.log('saved a new animal!');
-      console.log(data);
-
-      // now return the json data of the new animal
       var jsonData = {
-        status: 'OK',
-        animal: data
+        status: "OK",
+        record: data
       }
 
       return res.json(jsonData);
 
-    })  
-});
+  })
 
-// /**
-//  * GET '/api/get/:id'
-//  * Receives a GET request specifying the animal to get
-//  * @param  {String} req.param('id'). The animalId
-//  * @return {Object} JSON
-//  */
+})
 
+//get id
 router.get('/api/get/:id', function(req, res){
 
   var requestedId = req.param('id');
 
   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
-  Animal.findById(requestedId, function(err,data){
+  Record.findById(requestedId, function(err,data){
 
     // if err or no user found, respond with error 
     if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that animal'};
+      var error = {status:'ERROR', message: 'Could not find that record'};
        return res.json(error);
     }
 
     // otherwise respond with JSON data of the animal
     var jsonData = {
       status: 'OK',
-      animal: data
+      record: data
     }
 
     return res.json(jsonData);
@@ -116,34 +155,37 @@ router.get('/api/get/:id', function(req, res){
   })
 })
 
-// /**
-//  * GET '/api/get'
-//  * Receives a GET request to get all animal details
-//  * @return {Object} JSON
-//  */
+/**
+ * GET '/api/delete/:id'
+ * Receives a GET request specifying the animal to delete
+ * @param  {String} req.param('id'). The animalId
+ * @return {Object} JSON
+ */
 
-router.get('/api/get', function(req, res){
 
-  // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
-  Animal.find(function(err, data){
-    // if err or no animals found, respond with error 
+router.get('/api/delete/:id', function(req, res){
+
+  var requestedId = req.param('id');
+
+  // Mongoose method to remove, http://mongoosejs.com/docs/api.html#model_Model.findByIdAndRemove
+  Record.findByIdAndRemove(requestedId,function(err, data){
     if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find animals'};
+      var error = {status:'ERROR', message: 'Could not find that record to delete'};
       return res.json(error);
     }
 
-    // otherwise, respond with the data 
-
+    // otherwise, respond back with success
     var jsonData = {
       status: 'OK',
-      animals: data
-    } 
+      message: 'Successfully deleted id ' + requestedId
+    }
 
     res.json(jsonData);
 
   })
 
 })
+
 
 // /**
 //  * POST '/api/update/:id'
@@ -160,38 +202,25 @@ router.post('/api/update/:id', function(req, res){
    var dataToUpdate = {}; // a blank object of data to update
 
     // pull out the information from the req.body and add it to the object to update
-    var name, age, weight, color, url; 
+    var til, context, bestPartDay, tags; 
 
     // we only want to update any field if it actually is contained within the req.body
     // otherwise, leave it alone.
-    if(req.body.name) {
-      name = req.body.name;
+    if(req.body.til) {
+      til = req.body.til;
       // add to object that holds updated data
-      dataToUpdate['name'] = name;
+      dataToUpdate['til'] = til;
     }
-    if(req.body.age) {
-      age = req.body.age;
+    if(req.body.context) {
+      context = req.body.context;
       // add to object that holds updated data
-      dataToUpdate['age'] = age;
+      dataToUpdate['context'] = context;
     }
-    if(req.body.weight) {
-      weight = req.body.weight;
-      // add to object that holds updated data
-      dataToUpdate['description'] = {};
-      dataToUpdate['description']['weight'] = weight;
+    if(req.body.bestPartDay) {
+    bestPartDay = req.body.bestPartDay;
+    // add to object that holds updated data
+    dataToUpdate['bestPartDay'] = bestPartDay;
     }
-    if(req.body.color) {
-      color = req.body.color;
-      // add to object that holds updated data
-      if(!dataToUpdate['description']) dataToUpdate['description'] = {};
-      dataToUpdate['description']['color'] = color;
-    }
-    if(req.body.url) {
-      url = req.body.url;
-      // add to object that holds updated data
-      dataToUpdate['url'] = url;
-    }
-
     var tags = []; // blank array to hold tags
     if(req.body.tags){
       tags = req.body.tags.split(","); // split string into array
@@ -199,25 +228,30 @@ router.post('/api/update/:id', function(req, res){
       dataToUpdate['tags'] = tags;
     }
 
+    // if(req.body.pageURL) {
+    //   pageURL = req.body.pageURL;
+    //   // add to object that holds updated data
+    //   dataToUpdate['pageURL'] = pageURL;
+    // }    
 
     console.log('the data to update is ' + JSON.stringify(dataToUpdate));
 
-    // now, update that animal
+    // now, update that record
     // mongoose method findByIdAndUpdate, see http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate  
-    Animal.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
+    Record.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
       // if err saving, respond back with error
       if (err){
-        var error = {status:'ERROR', message: 'Error updating animal'};
+        var error = {status:'ERROR', message: 'Error updating record'};
         return res.json(error);
       }
 
-      console.log('updated the animal!');
+      console.log('Updated the record!');
       console.log(data);
 
       // now return the json data of the new person
       var jsonData = {
         status: 'OK',
-        animal: data
+        record: data
       }
 
       return res.json(jsonData);
@@ -226,34 +260,59 @@ router.post('/api/update/:id', function(req, res){
 
 })
 
-/**
- * GET '/api/delete/:id'
- * Receives a GET request specifying the animal to delete
- * @param  {String} req.param('id'). The animalId
- * @return {Object} JSON
- */
 
-router.get('/api/delete/:id', function(req, res){
+// this route gets called whenever Twilio receives a message
+// router.post('/twilio-callback', function(req,res){
 
-  var requestedId = req.param('id');
+//   // there's lots contained in the body
+//   console.log(req.body);
+//   // the actual message is contained in req.body.Body
+//   var incomingMsg = req.body.Body;
 
-  // Mongoose method to remove, http://mongoosejs.com/docs/api.html#model_Model.findByIdAndRemove
-  Animal.findByIdAndRemove(requestedId,function(err, data){
-    if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that animal to delete'};
-      return res.json(error);
-    }
+//   //incoming messages look like:
+//   //'format': 'Rain is wet, This morning it was gross outside, Having ice cream, tag1. tag2. tag3'
 
-    // otherwise, respond back with success
-    var jsonData = {
-      status: 'OK',
-      message: 'Successfully deleted id ' + requestedId
-    }
 
-    res.json(jsonData);
+//   var msgArray = incomingMsg.split(',');
+//   //msg Array --> [Rain is wet, This morning it was gross outside, Having ice cream, tag1.tag2.tag3]
+//   var til = msgArray[0];
+//   var context = msgArray[1];
+//   var bestPartDay = msgArray[2];
+//   var tags = msgArray[3].split('.');
 
-  })
 
-})
+//   //now let's save to our database
+//   var recordObj = {
+//     til: til,
+//     context: context,
+//     // tags: req.body.tags.split(','),
+//     bestPartDay: bestPartDay,
+//     tags: tags
+//     // pageURL: req.body.pageURL,
+//   }
+
+//   var record = new Record(recordObj)
+
+//   record.save(function(err,data){
+//     // set up the twilio response
+//     var twilioResp = new twilio.TwimlResponse();
+//     if(err){
+//       // respond to user
+//       twilioResp.sms('Oops! We couldn\'t save your lesson! --> ' + incomingMsg);
+//       // respond to twilio
+//       res.set('Content-Type', 'text/xml');
+//       res.send(twilioResp.toString());      
+//     }
+//     else {
+//       // respond to user
+//       twilioResp.sms('Successfully saved your lesson! --> ' + incomingMsg);
+//       // respond to twilio
+//       res.set('Content-Type', 'text/xml');
+//       res.send(twilioResp.toString());     
+//     }
+//   })
+
+
+// })
 
 module.exports = router;
