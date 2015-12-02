@@ -6,6 +6,7 @@
 // var query = "&q=til";
 // var apiKey = "&api_key=dc6zaTOxFJmzC";
 
+
 function init() {
   renderRecord();
   renderDisplay();
@@ -114,6 +115,8 @@ function renderDisplay(){
 			// console.log(response);
 
 			var record = response.record;
+
+			renderRune(record);
 			// console.log(record);
 
 			var i = record[Math.floor(Math.random()*record.length)];
@@ -121,7 +124,6 @@ function renderDisplay(){
 	
 			// for(var i=0;i<record.length;i++){
 				var date =  new Date(i.dateAdded); // 	turn string into a date object
-
 				var htmlToAdd = '<div class="col-md-12">'+
 					'<h1><span class ="displayDate">'+date.toDateString()+'</span></h1>'+
 					'<h2><span class="displayTil">'+i.til+'</span></h2>'+
@@ -136,6 +138,53 @@ function renderDisplay(){
 			// }
 		}
 	})	
+}
+
+
+function renderRune(record) {
+
+  var r = new Rune({
+  container: "#canvas",
+  width: 800,
+  height: 800,
+  debug: true
+ });
+  
+ 	var i = record[Math.floor(Math.random()*record.length)];
+	// console.log(i.til);
+	var date =  new Date(i.dateAdded);
+
+
+// r.text("My name is Rune Madsen", r.width/2, r.height/2)
+r.text(date.toDateString(), r.width/2, r.height/2)
+  .fill(30)
+  .stroke(false)
+  .fontSize(20)
+  .textAlign("center")
+  .fontFamily("Helvetica")
+  .textDecoration("underline")
+  .fontWeight("bold")
+
+ r.text(i.til, r.width/2, r.height/2+40)
+  .fill(30)
+  .stroke(false)
+  .fontSize(20)
+  .textAlign("center")
+  .fontFamily("Helvetica")
+  .textDecoration("underline")
+  .fontWeight("bold")
+
+  r.text(i.context, r.width/2, r.height/2+80)
+  .fill(30)
+  .stroke(false)
+  .fontSize(20)
+  .textAlign("center")
+  .fontFamily("Helvetica")
+  .textDecoration("underline")
+  .fontWeight("bold")
+
+
+r.draw();
 }
 
 
@@ -197,4 +246,4 @@ function deleteRecord(event){
 }
 
 
-window.addEventListener('load', init())
+window.addEventListener('load', init);
