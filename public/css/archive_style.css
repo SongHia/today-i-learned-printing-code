@@ -3,7 +3,7 @@
 /**************/
 
 body {
-  background: #4ECDC4;
+  background: #fff;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
 
@@ -115,7 +115,7 @@ a:hover {
 
 }
 .push {
-  margin-bottom: 1000px;
+  margin-bottom: 400px;
 }
 
 .main h1 {

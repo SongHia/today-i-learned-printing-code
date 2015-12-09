@@ -170,14 +170,6 @@ var yellow = "#FFE100";
 var magenta = "#CC1474";
 var black = 30;
 
-var purple ="#272E6E";
-var meringue = "#FFFFC3";
-
-var mustard = "#FFE165";
-var sienna = "#DE4242";
-var blood = "#84243B";
-
-
 var startingX = r.width/2;
 var startingY = r.height/2;
 // var allSpacing = 1;
@@ -185,9 +177,7 @@ var startingY = r.height/2;
 //scaling background
 // var columns = 10;
 // var rows = 80;
-// var columns = 12;
-var columns = 11;
-// var rows = 100;
+var columns = 12;
 var rows = 100;
 var xDist = r.width/columns; 
 var yDist = r.height/rows; 
@@ -198,23 +188,22 @@ for(var x = 0; x < r.width; x+=xDist)
     for(var y = 0; y < r.height; y+=yDist)
     {
      var theDate = r.text(date.toDateString(), x, y)
-		.fill(blood)
+		.fill(magenta)
 		.stroke(false)
-		.fontSize("left")
+		.fontSize(allSize)
 		.textAlign(allAlign)
 		.fontFamily(allFont)
 		.fontWeight(allWeight)
 		.textDecoration(allDecoration)
-		.rotate(90, r.width/2, r.height/2);
+		.rotate(45, r.width/2, r.height/2);
     }
   }
 
   
 
 
-var contextCol = 1;
-// var contextRow = 26;
-var contextRow = 60;
+var contextCol = 13;
+var contextRow = 26;
 var contextXDist = r.width/contextCol;
 var contextYDist = r.height/contextRow;
 
@@ -222,8 +211,8 @@ for(var x = 0; x < r.width; x+=contextXDist)
   {
     for(var y = 0; y < r.height; y+=contextYDist)
     {
-		var theContext = r.text(i.context.toUpperCase(), r.width/2, y)
-			.fill(sienna)
+		var theContext = r.text(i.context.toUpperCase(), x, y)
+			.fill(yellow)
 			.stroke(false)
 			.fontSize(allSize*2)
 			.textAlign("center")
@@ -245,30 +234,16 @@ for(var x = 0; x < r.width; x+=contextXDist)
 //   // .letterSpacing(allSpacing);
 
 
-// var tilSize = allSize*7;
-var tilSize = allSize*5;
-var tilString = i.til.toUpperCase();
-var tilArray = tilString.split(",");
-console.log("the new til array element 0: " + tilArray[0]);
-
-
-var theTIL01 = r.text(tilArray[0], startingX, startingY)
-	.fill(mustard)
+var tilSize = allSize*7;
+var theTIL = r.text(i.til.toUpperCase(), startingX, startingY)
+	.fill(magenta)
 	.stroke(false)
 	.fontSize(tilSize)
 	.textAlign(allAlign)
 	.fontFamily(allFont)
 	.fontWeight("bold")
 	.textDecoration(allDecoration);
-
-var theTIL02 = r.text(tilArray[1], startingX, startingY+tilSize)
-	.fill(mustard)
-	.stroke(false)
-	.fontSize(tilSize)
-	.textAlign(allAlign)
-	.fontFamily(allFont)
-	.fontWeight("bold")
-	.textDecoration(allDecoration);
+  // .letterSpacing(allSpacing);
 
 
 
