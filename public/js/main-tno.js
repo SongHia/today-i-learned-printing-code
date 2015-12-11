@@ -163,7 +163,7 @@ console.log(date);
 
 var allSize = 10;
 var allAlign = "center";
-var allFont = "Helvetica";
+var allFont = "Futura";
 var allWeight = "normal";
 var allDecoration = "none";
 var yellow = "#FFE100";
@@ -177,7 +177,7 @@ var startingY = r.height/2;
 //scaling background
 // var columns = 10;
 // var rows = 80;
-var columns = 12;
+var columns = 10;
 var rows = 100;
 var xDist = r.width/columns; 
 var yDist = r.height/rows; 
@@ -187,7 +187,8 @@ for(var x = 0; x < r.width; x+=xDist)
   {
     for(var y = 0; y < r.height; y+=yDist)
     {
-     var theDate = r.text(date.toDateString(), x, y)
+     // var theDate = r.text(date.toDateString(), x, y)
+     var theDate = r.text("THURS NOV 5 2015", x, y)
 		.fill(magenta)
 		.stroke(false)
 		.fontSize(allSize)
@@ -202,8 +203,11 @@ for(var x = 0; x < r.width; x+=xDist)
   
 
 
-var contextCol = 13;
-var contextRow = 26;
+// var contextCol = 13;
+// var contextRow = 26;
+
+var contextCol = 11;
+var contextRow = contextCol*2+2;
 var contextXDist = r.width/contextCol;
 var contextYDist = r.height/contextRow;
 
@@ -214,7 +218,7 @@ for(var x = 0; x < r.width; x+=contextXDist)
 		var theContext = r.text(i.context.toUpperCase(), x, y)
 			.fill(yellow)
 			.stroke(false)
-			.fontSize(allSize*2)
+			.fontSize(allSize*4)
 			.textAlign("center")
 			.fontFamily(allFont)
 			.fontWeight(allWeight)
@@ -233,17 +237,32 @@ for(var x = 0; x < r.width; x+=contextXDist)
 // 	.textDecoration(allDecoration);
 //   // .letterSpacing(allSpacing);
 
+var tilFont = "Futura";
+var tilColor = magenta;
+var tilString = i.til.toUpperCase();
+var tilArray = tilString.split("."); // 2 elements
 
-var tilSize = allSize*7;
-var theTIL = r.text(i.til.toUpperCase(), startingX, startingY)
-	.fill(magenta)
+var tilSize = allSize*14;
+var theTIL01 = r.text(tilArray[0], startingX, startingY)
+	.fill(tilColor)
 	.stroke(false)
 	.fontSize(tilSize)
 	.textAlign(allAlign)
-	.fontFamily(allFont)
+	.fontFamily(tilFont)
 	.fontWeight("bold")
 	.textDecoration(allDecoration);
   // .letterSpacing(allSpacing);
+
+var theTIL02 = r.text(tilArray[1], startingX, startingY+tilSize)
+	// .fill(tilStroke)
+	.fill(tilColor)
+	.stroke(false)
+	.fontSize(tilSize)
+	.textAlign(allAlign)
+	// .fontFamily(allFont)
+	.fontFamily(tilFont)
+	.fontWeight("bold")
+	.textDecoration(allDecoration);
 
 
 
