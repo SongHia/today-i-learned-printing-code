@@ -150,6 +150,7 @@ height: 1000,
 debug: true
 });
 
+r.rect(0, 0, r.width, r.height).fill(30);
 
 //random record  
 var i = record[Math.floor(Math.random()*record.length)];
@@ -162,37 +163,12 @@ console.log(date);
 
 var allSize = 10;
 var allAlign = "center";
-var allFont = "Helvetica";
+var allFont = "Futura";
 var allWeight = "normal";
 var allDecoration = "none";
 var yellow = "#FFE100";
 var magenta = "#CC1474";
 var black = 30;
-
-var purple ="#272E6E";
-var meringue = "#FFFFC3";
-
-var mustard = "#FFE165";
-var sienna = "#DE4242";
-var blood = "#84243B";
-
-
-var lemon = "#FEFF94";
-var plum = "#AD64C5";
-var teal = "#83D9EF";
-var babyblue = "#BCFFF2";
-
-var randRed = "#EB212E";
-var randBlue = "#1C4A9D";
-var randLightBlue = "#0E67B1";
-var randOrange = "#F58B31";
-var randYellow = "#FDD938";
-
-
-//background
-r.rect(0, 0, r.width, r.height).fill(randLightBlue)
-	.stroke(false);
-
 
 var startingX = r.width/2;
 var startingY = r.height/2;
@@ -201,12 +177,8 @@ var startingY = r.height/2;
 //scaling background
 // var columns = 10;
 // var rows = 80;
-// var columns = 12;
-
-// var columns = 8;
-var columns = 4;
-// var rows = 100;
-var rows = 10;
+var columns = 10;
+var rows = 100;
 var xDist = r.width/columns; 
 var yDist = r.height/rows; 
 
@@ -216,14 +188,12 @@ for(var x = 0; x < r.width; x+=xDist)
     for(var y = 0; y < r.height; y+=yDist)
     {
      // var theDate = r.text(date.toDateString(), x, y)
-     // var theDate = r.text("MON NOV 23 2015", x, y)
-          var theDate = r.text("MON NOV 23 2015", x + yDist, y)
-		.fill(randBlue)
+     var theDate = r.text("THURS NOV 5 2015", x, y)
+		.fill(magenta)
 		.stroke(false)
-		.fontSize("left")
+		.fontSize(allSize)
 		.textAlign(allAlign)
-		// .fontFamily(allFont)
-		.fontFamily("Futura")
+		.fontFamily(allFont)
 		.fontWeight(allWeight)
 		.textDecoration(allDecoration)
 		.rotate(45, r.width/2, r.height/2);
@@ -231,18 +201,13 @@ for(var x = 0; x < r.width; x+=xDist)
   }
 
   
-// Yellow: 9
-// Orange: 8
-// Red: 6
-// Violet: 3
-// Blue: 4
-// Green: 6
 
-var contextCol = 1;
+
+// var contextCol = 13;
 // var contextRow = 26;
-// var contextRow = 60;
-// var contextRow = 20;
-var contextRow = 12;
+
+var contextCol = 11;
+var contextRow = contextCol*2+2;
 var contextXDist = r.width/contextCol;
 var contextYDist = r.height/contextRow;
 
@@ -250,16 +215,15 @@ for(var x = 0; x < r.width; x+=contextXDist)
   {
     for(var y = 0; y < r.height; y+=contextYDist)
     {
-		var theContext = r.text(i.context.toUpperCase(), r.width/2, y)
-			.fill(randRed)
+		var theContext = r.text(i.context.toUpperCase(), x, y)
+			.fill(magenta)
 			.stroke(false)
-			.fontSize(allSize*2)
+			.fontSize(allSize*4)
 			.textAlign("center")
-			// .fontFamily(allFont)
-			.fontFamily("Futura")
+			.fontFamily(allFont)
 			.fontWeight(allWeight)
-			.textDecoration(allDecoration)
-			.rotate(315, r.width/2, r.height/2);
+			.textDecoration(allDecoration);
+		  // .letterSpacing(allSpacing);
     }
   }
 
@@ -273,29 +237,21 @@ for(var x = 0; x < r.width; x+=contextXDist)
 // 	.textDecoration(allDecoration);
 //   // .letterSpacing(allSpacing);
 
-
-// var tilSize = allSize*7;
-var tilSize = allSize*4.75;
+var tilFont = "Futura";
+var tilColor = yellow;
 var tilString = i.til.toUpperCase();
-var tilArray = tilString.split(","); // 2 elements
-// "This is all quite beautiful work... 
-// But how are you ever going to make any money doing this?"
+var tilArray = tilString.split("."); // 2 elements
 
-var tilFont = "Bodoni LT Pro";
-var tilColor = randOrange;
-// var tilColor = babyblue;
-
-var tilStroke = plum;
-
+var tilSize = allSize*14;
 var theTIL01 = r.text(tilArray[0], startingX, startingY)
 	.fill(tilColor)
 	.stroke(false)
 	.fontSize(tilSize)
 	.textAlign(allAlign)
-	// .fontFamily(allFont)
 	.fontFamily(tilFont)
 	.fontWeight("bold")
 	.textDecoration(allDecoration);
+  // .letterSpacing(allSpacing);
 
 var theTIL02 = r.text(tilArray[1], startingX, startingY+tilSize)
 	// .fill(tilStroke)
@@ -309,39 +265,10 @@ var theTIL02 = r.text(tilArray[1], startingX, startingY+tilSize)
 	.textDecoration(allDecoration);
 
 
-var theTIL03 = r.text(tilArray[2], startingX, startingY+tilSize*2)
-	// .fill(tilStroke)
-	.fill(tilColor)
-	.stroke(false)
-	.fontSize(tilSize)
-	.textAlign(allAlign)
-	// .fontFamily(allFont)
-	.fontFamily(tilFont)
-	.fontWeight("bold")
-	.textDecoration(allDecoration);
 
-var stringMoney = tilArray[2];
-var stringMoneyArray = stringMoney.split(" ");
-console.log("string money array: " + stringMoneyArray[3]);
-
-var theTIL04 = r.text(stringMoneyArray[3], startingX-39, startingY+tilSize*2)
-	// .fill(tilStroke)
-	.fill(randYellow)
-	.stroke(false)
-	.fontSize(tilSize)
-	.textAlign(allAlign)
-	// .fontFamily(allFont)
-	.fontFamily(tilFont)
-	.fontWeight("bold")
-	.textDecoration(allDecoration);
-
-
-
-
-
-// console.log("best part: " + i.bestPartDay);
-// console.log("tags: " + i.tags);
-// console.log("og date: " + i.dateAdded);
+console.log("best part: " + i.bestPartDay);
+console.log("tags: " + i.tags);
+console.log("og date: " + i.dateAdded);
 
 
 r.draw();

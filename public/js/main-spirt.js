@@ -206,10 +206,12 @@ var startingY = r.height/2;
 // var columns = 12;
 
 // var columns = 8;
-var columns = 4;
+var columns = 6;
 // var rows = 100;
 // var rows = 90;
-var rows = 45;
+// var rows = 45;
+// var rows = 20;
+var rows = 10;
 var xDist = r.width/columns; 
 var yDist = r.height/rows; 
 
@@ -220,12 +222,12 @@ for(var x = 0; x < r.width; x+=xDist)
     {
      // var theDate = r.text(date.toDateString(), x, y)
      var theDate = r.text("THURS OCT 16 2015", x, y)
-		.fill(randGreen)
+		.fill(randYellow)
 		.stroke(false)
 		.fontSize("left")
 		.textAlign(allAlign)
 		// .fontFamily(allFont)
-		.fontFamily("Futura LT Pro WORK")
+		.fontFamily("Futura LT Pro")
 		.fontWeight(allWeight)
 		.textDecoration(allDecoration)
 		.rotate(45, r.width/2, r.height/2);
